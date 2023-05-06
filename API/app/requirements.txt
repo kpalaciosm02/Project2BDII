@@ -1,0 +1,14 @@
+opencensus-ext-azure
+opencensus-ext-flask
+opencensus
+pyodbc
+flask
+azure-identity
+azure-storage-blob
+cassandra-driver
+flask
+flask-cors
+python-dotenv
+tenacity
+pytz
+datetime
