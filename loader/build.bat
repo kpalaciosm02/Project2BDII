@@ -1,3 +1,3 @@
 
-docker build -t kenfabguzram/rest-api .
-docker push kenfabguzram/rest-api
+docker build -t kenfabguzram/loader .
+docker push kenfabguzram/loader
