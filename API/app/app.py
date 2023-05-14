@@ -7,9 +7,6 @@ import json
 from bson import ObjectId
 
 app = flask.Flask(__name__)
-os.environ[
-    "CONNECTION_STRING"
-] = "mongodb+srv://admin:YRklqMOH3ZMA85GU@song-lyrics-search.zpp8xfd.mongodb.net/?retryWrites=true&w=majority"
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -35,10 +32,8 @@ def verify_connection_to_mongo():
         return False
 
 
-def mongo_search(query: str, path: str, limit: int):
-    if not verify_connection_to_mongo():
-        return "no"
-    else:
+def mongo_search(query: str, path: str, limit: int, query_type: str):
+    try:
         # Connect to MongoDB Atlas
         url = os.environ["CONNECTION_STRING"]
         client = MongoClient(url)
@@ -48,20 +43,20 @@ def mongo_search(query: str, path: str, limit: int):
         collection = "Artists-Lyrics"
         index_name = "lyrics-search"
 
-        results = client[database][collection].aggregate(
-            [
-                {
-                    "$search": {
-                        "index": index_name,
-                        "text": {
-                            "path": path,
-                            "query": query,
-                        },
-                    }
-                },
-                {"$limit": limit},
-            ]
-        )
+        pipeline = [
+            {
+                "$search": {
+                    "index": index_name,
+                    query_type: {
+                        "path": path,
+                        "query": query,
+                    },
+                }
+            },
+            {"$limit": limit},
+        ]
+
+        results = client[database][collection].aggregate(pipeline)
 
         documents = [doc for doc in results]
 
@@ -70,6 +65,51 @@ def mongo_search(query: str, path: str, limit: int):
         # Close the MongoDB connection
         client.close()
         return json_data
+    except Exception as e:
+        return e
+
+
+def mongo_filter_search(paths: list, queries: list, limit: int, query_type: str):
+    if len(paths) != len(queries):
+        return "Error: paths and queries length don't match"
+    try:
+        # Connect to MongoDB Atlas
+        url = os.environ["CONNECTION_STRING"]
+        client = MongoClient(url)
+
+        # Access the desired database and collection
+        database = "song-lyrics-search"
+        collection = "Artists-Lyrics"
+        index_name = "lyrics-search"
+
+        pipeline = [
+            {
+                "$search": {
+                    "index": index_name,
+                    "compound": {
+                        "must": [
+                            {query_type: {"query": query, "path": path}}
+                            for path, query in zip(paths, queries)
+                        ]
+                    },
+                }
+            },
+            {"$limit": limit},
+        ]
+
+        results = client[database][collection].aggregate(pipeline)
+
+        documents = [doc for doc in results]
+
+        print(len(documents))
+
+        json_data = json.dumps(documents, cls=JSONEncoder)
+
+        # Close the MongoDB connection
+        client.close()
+        return json_data
+    except Exception as e:
+        return e
 
 
 @app.route("/mongo/search", methods=["GET"])
@@ -78,7 +118,18 @@ def get_mongo_search():
     path = json_input["path"]
     query = json_input["query"]
     limit = json_input["limit"]
-    return mongo_search(query, path, limit)
+    query_type = json_input["query_type"]
+    return mongo_search(query, path, limit, query_type)
+
+
+@app.route("/mongo/search/filters", methods=["GET"])
+def get_mongo_search_filters():
+    json_input = flask.request.get_json()
+    paths = json_input["paths"]
+    queries = json_input["queries"]
+    limit = json_input["limit"]
+    query_type = json_input["query_type"]
+    return mongo_filter_search(paths, queries, limit, query_type)
 
 
 if __name__ == "__main__":
