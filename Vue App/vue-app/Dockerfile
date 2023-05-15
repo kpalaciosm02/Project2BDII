@@ -1,8 +1,9 @@
 #imagen de linux a usar
 FROM node:lts-alpine
 
-#instalar el server http
-RUN npm install -g http-server
+#eliminar los archivos de node_modules y package-lock.json si existen
+RUN rm -rf /app/node_modules
+RUN rm -f /app/package-lock.json
 
 #crear el directorio de trabajo
 RUN mkdir /app
@@ -14,7 +15,10 @@ WORKDIR /app
 COPY package*.json ./
 
 #instalar la app en el contenedor
-RUN npm install
+RUN npm install --silent
+
+#instalar Firebase y http-server como dependencias
+RUN npm install firebase@latest http-server --save
 
 #copiar todos los archivos locales al contenedor
 COPY . .
@@ -26,4 +30,4 @@ RUN npm run build
 EXPOSE 8080
 
 #correr el comando para correr la app final
-CMD [ "http-server", "dist" ]
+CMD ["npx", "http-server", "dist"]

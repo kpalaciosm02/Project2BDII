@@ -1,21 +1,18 @@
+<template>
+  <signup msg="Welcome to Your Vue.js App"/>
+</template>
+
 <script lang="ts">
-  import LogIn from '../components/LogIn.vue'
-  export default {
+import signup from '../components/Signup.vue'
+export default {
   name: 'App',
   components: {
     
-    LogIn
+    signup
     
   }}
 </script>
   
-<template>
-  <main>
-    <!--Agregar aca el componente a mostrar en el home (log in)-->
-    <LogIn></LogIn>
-  </main>
-</template>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
