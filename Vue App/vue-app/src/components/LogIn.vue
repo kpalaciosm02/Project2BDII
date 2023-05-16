@@ -22,7 +22,7 @@
               <div id="central">
                   <div id="login">
                       <div class="titulo">
-                          TP2
+                          Login TP2
                       </div>
                       <form id="loginform">
                           <input type="email" name="usuario" placeholder="Usuario"  v-model="email">
@@ -35,19 +35,14 @@
                       <p>{{ mensaje1 }}</p>
                      
                   </div>
-          
               </div>
-          </div>
-              
+          </div>     
       </body>
-  </html>   
+  </html> 
   
+</template>
   
-  
-  
-    </template>
-  
-  <style>
+<style>
   
   body {
     font-family: 'Overpass', sans-serif;
@@ -181,69 +176,56 @@
     color: #3282b8;
   }
   
-  </style>
+</style>
   
-  <script>
-  
-  
-  
+<script>
   import { initializeApp } from 'firebase/app';
   import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
   
+  const firebaseConfig = {
+    apiKey: "AIzaSyDL7BvGvYy_zFiae-U1MKlvc9fbSXdnn8E",
+    authDomain: "proyectobd2-1ee28.firebaseapp.com",
+    databaseURL: "https://proyectobd2-1ee28-default-rtdb.firebaseio.com",
+    projectId: "proyectobd2-1ee28",
+    storageBucket: "proyectobd2-1ee28.appspot.com",
+    messagingSenderId: "953952352773",
+    appId: "1:953952352773:web:93972982c0dc40300b3a6c"
+  };
   
-    const firebaseConfig = {
-      apiKey: "AIzaSyDL7BvGvYy_zFiae-U1MKlvc9fbSXdnn8E",
-      authDomain: "proyectobd2-1ee28.firebaseapp.com",
-      databaseURL: "https://proyectobd2-1ee28-default-rtdb.firebaseio.com",
-      projectId: "proyectobd2-1ee28",
-      storageBucket: "proyectobd2-1ee28.appspot.com",
-      messagingSenderId: "953952352773",
-      appId: "1:953952352773:web:93972982c0dc40300b3a6c"
-      };
+  const app = initializeApp(firebaseConfig);
   
-      const app = initializeApp(firebaseConfig);
-  
-      // Get auth object
-      const auth = getAuth(app);
+  // Get auth object
+  const auth = getAuth(app);
   
       
-    export default {
-      data() {
-        return {
-          currentUser: null,
-          email: '',
-          password: '',
-          mensaje1: 'uid'
-        };
-      },
-      mounted() {
-        // Suscribirse a cambios en la autenticación
-        auth.onAuthStateChanged(user => {
-          this.currentUser = user
-  
-          
-        })
-  
-  
-        
-      },
-      methods: {
-  
-  
-  
-        async signIn() {
-  
-          try { 
-              const {userCredential}  = await signInWithEmailAndPassword(auth, this.email, this.password) 
-            
-              this.mensaje1= this.currentUser.uid;
-               
-              } 
-              catch(error) {
-                     console.log(error.message)
-                     this.mensaje1= "error"
-                  }
+  export default {
+    data() {
+      return {
+        currentUser: null,
+        email: '',
+        password: '',
+        mensaje1: ''
+      };
+    },
+    mounted() {
+      // Suscribirse a cambios en la autenticación
+      auth.onAuthStateChanged(user => {
+      this.currentUser = user     
+      })
+    },
+    methods: {
+      async signIn() {
+        try { 
+          const {userCredential}  = await signInWithEmailAndPassword(auth, this.email, this.password) 
+          this.mensaje1= this.currentUser.uid;
+          alert("User id del usuario insertado: " + this.currentUser.uid);
+          this.$router.push({name:'signup'});
+        }catch(error) {
+          console.log(error.message);
+          alert("Error al realizar la autenticación. Intente nuevamente.")
+          //this.$router.push({name:'about'});
         }
+      }
     }
   }
-    </script>
+</script>

@@ -22,7 +22,7 @@
             <div id="central">
                 <div id="login">
                     <div class="titulo">
-                        Tp2
+                        Sign in Tp2
                     </div>
                     <form id="loginform">
                         <input type="email" name="usuario" placeholder="Usuario"  v-model="email">
@@ -55,7 +55,7 @@ body {
   color: #1b262c;
   
   margin: 0;
-  background-color: #0f4c75;
+  /*background-color: #0f4c75;*/
 }
 
 #contenedor {
