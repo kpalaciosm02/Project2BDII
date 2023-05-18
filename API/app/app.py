@@ -5,9 +5,10 @@ from pymongo.server_api import ServerApi
 from pymongo import MongoClient
 import json
 from bson import ObjectId
+from flask_cors import CORS
 
 app = flask.Flask(__name__)
-
+CORS(app)
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
