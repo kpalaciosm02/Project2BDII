@@ -29,7 +29,7 @@ class TestAPI(unittest.TestCase):
         }
 
         #Create de request to de route
-        response = requests.get(self.base_url + '/mongo/search', json= data)
+        response = requests.post(self.base_url + '/mongo/search', json= data)
         #Verify the responses are OK
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()[0]['_id'],"645da7f1743ac88b8a22dd9d") #Compared Id of the song
@@ -48,7 +48,7 @@ class TestAPI(unittest.TestCase):
         }
 
         #Create de request to de route
-        response = requests.get(self.base_url + '/mongo/search/filters', json= data)
+        response = requests.post(self.base_url + '/mongo/search/filters', json= data)
         #Verify the responses are OK
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()[0]['_id'],"645da81e743ac88b8a237079") #Only compared first item
