@@ -7,15 +7,15 @@ class TestAPI(unittest.TestCase):
         # URL of the API
         self.base_url = "https://main-app.gentleflower-12982389.eastus.azurecontainerapps.io"
 
-    #def test_mongo_connection(self):
+    def test_mongo_connection(self):
         #Create de request to de route
-        #response = requests.get(self.base_url + '/mongo/connection')
+        response = requests.get(self.base_url + '/mongo/connection')
         #Verify the responses are OK
-        #self.assertEqual(response.status_code, 200)
-        #self.assertEqual(response.text, "Succesful Connection") #Compared Id of the song
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.text, "Succesful Connection!") #Compared Id of the song
         
         #Finish mongo/search test route
-        #print("Mongo connection test completed")
+        print("Mongo connection test completed")
 
 
     def test_mongo_search(self):
