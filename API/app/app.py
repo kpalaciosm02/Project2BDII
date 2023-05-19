@@ -111,6 +111,15 @@ def mongo_filter_search(paths: list, queries: list, limit: int, query_type: str)
         return json_data
     except Exception as e:
         return e
+    
+    
+@app.route("/mongo/connection", methods=["GET"])
+def get_mongo_connection():
+    response = verify_connection_to_mongo()
+    if response:
+        return "Succesful Connection!"
+    else:
+        return "Failed Connection"
 
 
 @app.route("/mongo/search", methods=["GET"])
