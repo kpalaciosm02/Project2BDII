@@ -22,7 +22,7 @@
             <div id="central">
                 <div id="login">
                     <div class="titulo">
-                        Sign in Tp2
+                        Sign up Tp2
                     </div>
                     <form id="loginform">
                         <input type="email" name="usuario" placeholder="Usuario"  v-model="email">

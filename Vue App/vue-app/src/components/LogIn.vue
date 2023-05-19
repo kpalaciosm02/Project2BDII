@@ -214,12 +214,12 @@
       })
     },
     methods: {
-      async signIn() {
+      async signIn() {//method to authenticate with firebase and redirect to the main page.
         try { 
           const {userCredential}  = await signInWithEmailAndPassword(auth, this.email, this.password) 
           this.mensaje1= this.currentUser.uid;
           alert("User id del usuario insertado: " + this.currentUser.uid);
-          this.$router.push({name:'signup'});
+          this.$router.push({name:'signup'});//cambiar por mainpage
         }catch(error) {
           console.log(error.message);
           alert("Error al realizar la autenticación. Intente nuevamente.")
