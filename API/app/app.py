@@ -122,7 +122,7 @@ def get_mongo_connection():
         return "Failed Connection"
 
 
-@app.route("/mongo/search", methods=["GET"])
+@app.route("/mongo/search", methods=["POST"])
 def get_mongo_search():
     json_input = flask.request.get_json()
     path = json_input["path"]
@@ -132,7 +132,7 @@ def get_mongo_search():
     return mongo_search(query, path, limit, query_type)
 
 
-@app.route("/mongo/search/filters", methods=["GET"])
+@app.route("/mongo/search/filters", methods=["POST"])
 def get_mongo_search_filters():
     json_input = flask.request.get_json()
     paths = json_input["paths"]
