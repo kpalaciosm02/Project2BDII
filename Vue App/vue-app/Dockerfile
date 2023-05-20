@@ -19,6 +19,8 @@ RUN npm install --silent
 
 #instalar Firebase y http-server como dependencias
 RUN npm install firebase@latest http-server --save
+#instalar axios
+RUN npm install axios
 
 #copiar todos los archivos locales al contenedor
 COPY . .

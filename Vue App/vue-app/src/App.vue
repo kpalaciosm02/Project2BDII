@@ -5,13 +5,14 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <div class="header">
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/">Login</RouterLink>
       <RouterLink to="/signup">SignUp</RouterLink>
+      <RouterLink to="/main">Search</RouterLink>
     </nav>
   </div>
+
   <div>
-    <RouterView />
+    <RouterView> </RouterView>
   </div>
 </template>
 
@@ -23,5 +24,13 @@ import { RouterLink, RouterView } from 'vue-router'
   }
   .header nav{
     display: flex;
+  }
+  RouterView{
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
   }
 </style>

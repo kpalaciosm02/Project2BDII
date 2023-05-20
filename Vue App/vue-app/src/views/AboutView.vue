@@ -3,9 +3,10 @@
 </script>
 
 <template>
-  <div class="about">
-    <p>About project</p>
-  </div>
+  <main>
+    <!--Agregar aca el componente a mostrar en el home (log in)-->
+    <about></about>
+  </main>
 </template>
 
 <style>
