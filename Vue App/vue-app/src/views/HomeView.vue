@@ -1,10 +1,12 @@
 <script>
   import SongPreview from '../components/SongPreview.vue';
+  import SongInfo from '../components/SongInfo.vue';
   export default{
     name: 'HomeView',
     components: {
-      SongPreview
-    },
+    SongPreview,
+    SongInfo
+},
     data(){
       return {
         songs : [
@@ -15,7 +17,15 @@
         ],
         filters: [
 
-        ]
+        ],
+        songData: {
+          songName: 'Somebody that I used to know',
+          songGenre: 'Pop, Rock',
+          songAuthor: 'Gotye',
+          songLyrics: "Now and then I think of when we were together \nLike when you said you felt so happy you could die\nTold myself that you were right for me\nBut felt so lonely in your company\nBut that was love, and it's an ache I still remember",
+          songDuration: '04:03'
+        },
+        showSong: false
       }
     },
     methods: {
@@ -36,16 +46,19 @@
         else{
           alert("El filtro a eliminar no existe.");
         }
+      },
+      toggleShowSong(){
+        this.showSong = !this.showSong;
       }
     }
   }
 </script>
 
 <template>
-  <div class="bigContainer">
+  <div class="bigContainer" v-if="!showSong">
     <div class="songsContainer">
       <div v-for="song in songs" class="songContainer">
-        <SongPreview :songName="song.songName" :songAuthor="song.songAuthor" :songDuration="song.songDuration"></SongPreview>
+        <SongPreview :songName="song.songName" :songAuthor="song.songAuthor" :songDuration="song.songDuration" @click="toggleShowSong()"></SongPreview>
       </div>  
     </div>
     
@@ -67,9 +80,12 @@
         </div>
         <div class="deleteButton" @click="deleteFilter(filter)">-</div>
       </div>
+      <button class="searchButton">Search</button>
     </div>
   </div>
-  
+  <div class="songContainer" v-if="showSong">
+    <SongInfo :songName="songData.songName" :songDuration="songData.songDuration" :songAuthor="songData.songAuthor" :songLyrics="songData.songLyrics" :songGenre="songData.songGenre"></SongInfo>
+  </div>
 </template>
   
 <style>
@@ -109,6 +125,7 @@
     border-radius: 4px;
     color: #bbe1fa;
     margin-left: 4px;
+    cursor: pointer;
   }
 
   .filterButton{
@@ -169,5 +186,19 @@
 
   .filterInput::placeholder{
     color: #bbe1fa;
+  }
+
+  .searchButton{
+    width: 200px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #bbe1fa;
+    background-color: #181818;
+    border: 1px solid #bbe1fa;
+    border-radius: 4px;
+    margin-top: 16px;
+    margin-left: 150px;
   }
 </style>
