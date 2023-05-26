@@ -1,9 +1,11 @@
 <script lang="ts">
+
     interface ItemProps{
         songName: string,
         songDuration: string,
         songAuthor: string
     }
+
     export default{
         props: {
             songName: {

@@ -1,23 +1,37 @@
 <script>
   import SongPreview from '../components/SongPreview.vue';
   import SongInfo from '../components/SongInfo.vue';
+  import axios from 'axios';
+
+
   export default{
     name: 'HomeView',
+
     components: {
-    SongPreview,
-    SongInfo
-},
+        SongPreview,
+        SongInfo
+      },
     data(){
+
+
       return {
+        SongNameA:null,
+        SongDurationA:null,
+        songAuthorA:null,  
+        SongGenreA:null,
+        SongLyricsA:null,
+
+
+        posts: [],
+
         songs : [
-          { songName: 'Somebody that I used to know', songDuration: '04:03', songAuthor: 'Gotye'},
-          { songName: 'Lose Yourself', songDuration: '05:24', songAuthor: 'Eminem'},
-          { songName: 'Eye of the Beholder', songDuration: '06:26', songAuthor: 'Metallica'},
-          { songName: 'Your Love', songDuration: '04:13', songAuthor: 'The Outfield'}
+          
         ],
+
         filters: [
 
         ],
+
         songData: {
           songName: 'Somebody that I used to know',
           songGenre: 'Pop, Rock',
@@ -27,8 +41,16 @@
         },
         showSong: false
       }
+
+
+
     },
+
+
     methods: {
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
       agregarFiltro(event){
         const selectedFilter = document.getElementById('filterName').value;
         if (!this.filters.includes(selectedFilter)){
@@ -38,6 +60,10 @@
           alert("Este filtro ya se encuentra en el sistema.")
         }
       },
+
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------      
       deleteFilter(filter){
         const index = this.filters.indexOf(filter);
         if (index != -1){
@@ -49,7 +75,96 @@
       },
       toggleShowSong(){
         this.showSong = !this.showSong;
-      }
+      },
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+
+      ConstruirListaCancionesConFiltro(){
+
+        this.obtenerConFiltro();
+        this.songs = this.posts.map((item) => {
+        return {
+          songName: item.SName,
+          songDuration: obtenerDuracionCancion(item.Lyric), // Obtener la duración de la canción desde el campo Lyric
+          songAuthor: item.Artist
+        };
+      });
+      },
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+
+      ConstruirListaCancionesSinFiltro(){
+
+          this.obtenerSinFiltro();
+          this.songs = this.posts.map((item) => {
+          return {
+            songName: item.SName,
+            songDuration: obtenerDuracionCancion(item.Lyric), // Obtener la duración de la canción desde el campo Lyric
+            songAuthor: item.Artist
+          };
+          });
+          },
+
+
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+      async obtenerConFiltro() {
+          const data = {
+              paths: this.filters,
+              queries: ["Love Of My Life", "queen"],
+              limit: 2,
+              query_type: "phrase"
+            };
+
+          const headers = {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          };
+
+          axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search/filters', data, { headers })
+            .then(response => {
+              this.posts = response.data;
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        },
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+      async obtenerSinFiltro() {
+
+        const data = {
+              paths: ["SName", "Artist"],
+              queries: ["Love Of My Life", "queen"],
+              limit: 2,
+              query_type: "phrase"
+            };
+
+          const headers = {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          };
+          axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
+          
+
+        .then(response => {
+          this.posts = response.data;
+              console.log(response.data);
+
+        })
+        .catch(error => {
+          // Maneja los errores aquí
+          console.error(error);
+        });
+      },
+
+
+
     }
   }
 </script>
@@ -80,7 +195,8 @@
         </div>
         <div class="deleteButton" @click="deleteFilter(filter)">-</div>
       </div>
-      <button class="searchButton">Search</button>
+      <button type= "button" class="searchButton" @click="ConstruirListaCancionesConFiltro">Search with filter</button>
+      <button type= "button" class="searchButton" @click="ConstruirListaCancionesSinFiltro">Search without filter</button>
     </div>
   </div>
   <div class="songContainer" v-if="showSong">
