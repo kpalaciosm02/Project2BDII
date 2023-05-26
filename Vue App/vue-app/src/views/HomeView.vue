@@ -117,8 +117,10 @@
               queries: ["Love Of My Life", "queen"],
               limit: 2,
               query_type: "phrase"
-            };
-
+          };
+          const inputs = document.querySelectorAll('.filterContainer .filterInput');
+          const datos = Array.from(inputs).map(input => input.value); //aca se guardan los datos escritos en los input de texto de la interfaz
+          //alert(datos);
           const headers = {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
