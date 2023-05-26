@@ -82,14 +82,21 @@
 
       ConstruirListaCancionesConFiltro(){
 
-        this.obtenerConFiltro();
-        this.songs = this.posts.map((item) => {
-        return {
-          songName: item.SName,
-          songDuration: obtenerDuracionCancion(item.Lyric), // Obtener la duración de la canción desde el campo Lyric
-          songAuthor: item.Artist
-        };
-      });
+        this.obtenerSinFiltro()
+        .then(() => {
+          this.songs = this.posts.map((item) => {
+            return {
+              songName: item.SName,
+              songDuration: "3:46", // Obtener la duración de la canción desde el campo Lyric
+              songAuthor: item.Artist
+            };
+          });
+        })
+        .catch((error) => {
+          // Manejar el error aquí
+          console.error(error);
+        });
+        
       },
 //----------------------------------------------------------------
 //----------------------------------------------------------------
@@ -97,76 +104,93 @@
 
       ConstruirListaCancionesSinFiltro(){
 
-          this.obtenerSinFiltro();
-          this.songs = this.posts.map((item) => {
-          return {
-            songName: item.SName,
-            songDuration: obtenerDuracionCancion(item.Lyric), // Obtener la duración de la canción desde el campo Lyric
-            songAuthor: item.Artist
-          };
+          this.obtenerSinFiltro()
+          .then(() => {
+            this.songs = this.posts.map((item) => {
+            return {
+              songName: item.SName,
+              songDuration: "3:46", // Obtener la duración de la canción desde el campo Lyric
+              songAuthor: item.Artist
+            };
           });
-          },
-
-
-//----------------------------------------------------------------
-//----------------------------------------------------------------
-//----------------------------------------------------------------
-      async obtenerConFiltro() {
-          const data = {
-              paths: this.filters,
-              queries: ["Love Of My Life", "queen"],
-              limit: 2,
-              query_type: "phrase"
-          };
-          const inputs = document.querySelectorAll('.filterContainer .filterInput');
-          const datos = Array.from(inputs).map(input => input.value); //aca se guardan los datos escritos en los input de texto de la interfaz
-          //alert(datos);
-          const headers = {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          };
-
-          axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search/filters', data, { headers })
-            .then(response => {
-              this.posts = response.data;
-              console.log(response.data);
-            })
-            .catch(error => {
-              console.log(error);
-            });
+        })
+        .catch((error) => {
+            // Manejar el error aquí
+            console.error(error);
+        });
         },
-//----------------------------------------------------------------
-//----------------------------------------------------------------
-//----------------------------------------------------------------
-      async obtenerSinFiltro() {
 
-        const data = {
-              paths: ["SName", "Artist"],
-              queries: ["Love Of My Life", "queen"],
+
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+       obtenerConFiltro() {
+        try {
+            const inputs = document.querySelectorAll('.filterContainer .filterInput');
+            const datos = Array.from(inputs).map(input => input.value);
+
+            const data = {
+              path: this.filters,
+              query: datos,
               limit: 2,
               query_type: "phrase"
             };
 
-          const headers = {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          };
-          axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
-          
+            const headers = {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            };
 
-        .then(response => {
-          this.posts = response.data;
-              console.log(response.data);
+            axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search/filters', data, { headers })
+            .then(response => {
+                this.posts = response.data;
+                console.log(response.data);
+              })
+              .catch(error => {
+                // Manejar el error aquí
+                console.error(error);
+              });
+            
 
-        })
-        .catch(error => {
-          // Maneja los errores aquí
-          console.error(error);
-        });
+        } catch (error) {
+            console.error(error);
+        }
+        },
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+       obtenerSinFiltro() {
+        try {
+            const inputs = document.querySelectorAll('.filterContainer .filterInput');
+            const datos = Array.from(inputs).map(input => input.value);
+
+            const data = {
+              path: this.filters,
+              query: datos,
+              limit: 2,
+              query_type: "phrase"
+            };
+
+            const headers = {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            };
+
+            axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
+            .then(response => {
+                this.posts = response.data;
+                console.log(response.data);
+              })
+              .catch(error => {
+                // Manejar el error aquí
+                console.error(error);
+              });
+            
+
+        } catch (error) {
+            console.error(error);
+        }
       },
-
-
-
     }
   }
 </script>
@@ -182,12 +206,13 @@
     <div class="filtersContainer">
       <label for="filterName" class="filterName">Seleccione un tipo de filtro</label>
       <select name="filterName" id="filterName" class="filterSelect">
-        <option value="Canciones">Número de canciones</option>
-        <option value="Artista">Artista</option>
+        <option value="SName">Nombre de canciones</option>
+        <option value="Artist">Artista</option>
         <!--<option value="lyrics">Lyrics</option>-->
-        <option value="Género">Género</option>
-        <option value="Lenguaje">Lenguaje</option>
-        <option value="Popularidad">Popularidad</option>
+        <option value="Genres">Género</option>
+        <option value="language">Lenguaje</option>
+        <option value="Popularity">Popularidad</option>
+        <option value="Lyric">Letra</option>
       </select>
       <button class="filterButton" @click="agregarFiltro">+ Agregar filtro</button>
       <div v-for="filter in filters" class="filter">
@@ -199,6 +224,7 @@
       </div>
       <button type= "button" class="searchButton" @click="ConstruirListaCancionesConFiltro">Search with filter</button>
       <button type= "button" class="searchButton" @click="ConstruirListaCancionesSinFiltro">Search without filter</button>
+      
     </div>
   </div>
   <div class="songContainer" v-if="showSong">
