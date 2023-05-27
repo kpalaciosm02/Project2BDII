@@ -5,9 +5,10 @@ from pymongo.server_api import ServerApi
 from pymongo import MongoClient
 import json
 from bson import ObjectId
+from flask_cors import CORS
 
 app = flask.Flask(__name__)
-
+CORS(app)
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -110,9 +111,18 @@ def mongo_filter_search(paths: list, queries: list, limit: int, query_type: str)
         return json_data
     except Exception as e:
         return e
+    
+    
+@app.route("/mongo/connection", methods=["GET"])
+def get_mongo_connection():
+    response = verify_connection_to_mongo()
+    if response:
+        return "Succesful Connection!"
+    else:
+        return "Failed Connection"
 
 
-@app.route("/mongo/search", methods=["GET"])
+@app.route("/mongo/search", methods=["POST"])
 def get_mongo_search():
     json_input = flask.request.get_json()
     path = json_input["path"]
@@ -122,7 +132,7 @@ def get_mongo_search():
     return mongo_search(query, path, limit, query_type)
 
 
-@app.route("/mongo/search/filters", methods=["GET"])
+@app.route("/mongo/search/filters", methods=["POST"])
 def get_mongo_search_filters():
     json_input = flask.request.get_json()
     paths = json_input["paths"]
