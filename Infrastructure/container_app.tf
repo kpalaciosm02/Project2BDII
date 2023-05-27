@@ -35,6 +35,10 @@ template {
       image  = "docker.io/kenfabguzram/rest-api:latest"
       cpu    = "0.25"
       memory = "0.5Gi"
+      env {
+        name  = "CONNECTION_STRING"
+        value = "mongodb+srv://admin:YRklqMOH3ZMA85GU@song-lyrics-search.zpp8xfd.mongodb.net/?retryWrites=true&w=majority"
+      }
 #      liveness_probe {
 #        port      = 5000
 #        timeout   = 5
