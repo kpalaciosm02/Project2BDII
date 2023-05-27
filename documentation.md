@@ -91,7 +91,7 @@ Las rutas de la aplicación Flask están definidas para manejar las solicitudes 
 
 Finalmente, se configura la aplicación Flask y se inicia el servidor si el script se ejecuta directamente.
 
-## Node JS App
+## Node JS App(Vue)
 
 Para el desarrollo de la página web solicitada se optó por el Framework Vue ya que este es sumamente versátil y posee muchas funcionalidades prehechas, además de ser más sencillo de utilizar que frameworks grandes como Angular. 
 Ya que Vue está diseñado para que las aplicaciones que se desarrollen acá sean modularizadas y con componentes reutilizables, optamos por crear un conjunto de componentes y vistas que son las que utilizarán numerosas veces en el sistema.
@@ -100,6 +100,10 @@ En cuanto a componentes tenemos LogIn, SignUp, SongInfo y SongPreview.
  - **SignUp:** este componente también es muy simple. Pide los datos para registrar un usuario y una vez se indica que el usuario está listo, los verifica y los envía a Firebase para registrar un usuario.
  - **SongInfo:** este componente muestra todos los datos de una canción, desde su nombre y autor, hasta su letra. Ya que estos datos son variantes, están guardados en el documento dentro de variables que pueden ser cambiadas según sea necesario enseñar distinta información.
  - **SongPreview** este componente se utiliza para mostrar una previsualización de las canciones y que, así, el usuario pueda elegir sobre qué canción ver más detalles. Igualmente recibe por parámetro los datos de la canción a mostrar.
+
+Para el desarrollo de sign up y login se dio uso a la plataforma Firebase, esta permite una capa de seguridad al encriptar el id de usuarios registrados en la misma y poder acceder a esta información mediante el correo y la contraseña ingresada, La conexión se realiza a traves de un enlace con el proyecto creado y con metodos disponibles de la librería para vue llamada igual que la plataforma.
+
+Para efectos de la conexión con el API se utilizó la librería Axios la cual permite la ejecución de HTTP,con lo que se permitió la ejecución de los metodos POST construidos en el API y requeridos para la comunicación con la base de datos MongoDB,  la información obtenida por el response de los metodos fue almacenada en una variable e implementada luego para los usos que se necesitara darle a la información.
 
 ## Pruebas Unitarias
 La clase `TestAPI` hereda de `unittest.TestCase`, lo que indica que es una clase de prueba que contiene varios métodos de prueba.
