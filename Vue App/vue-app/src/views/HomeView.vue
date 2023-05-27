@@ -82,9 +82,7 @@
 
       ConstruirListaCancionesConFiltro(){
 
-        this.obtenerSinFiltro();
-        alert(this.songs);
-        /*.then(() => {
+        this.obtenerConFiltro();
           this.songs = this.posts.map((item) => {
             return {
               songName: item.SName,
@@ -92,11 +90,7 @@
               songAuthor: item.Artist
             };
           });
-        })
-        .catch((error) => {
-          // Manejar el error aquí
-          console.error(error);
-        });*/
+        
       },
 //----------------------------------------------------------------
 //----------------------------------------------------------------
@@ -105,7 +99,6 @@
       ConstruirListaCancionesSinFiltro(){
 
         this.obtenerSinFiltro();
-        /*.then(() => {
           this.songs = this.posts.map((item) => {
             return {
               songName: item.SName,
@@ -113,11 +106,6 @@
               songAuthor: item.Artist
             };
           });
-        })
-        .catch((error) => {
-            // Manejar el error aquí
-            console.error(error);
-        });*/
       },
 
 
@@ -130,9 +118,9 @@
             const datos = Array.from(inputs).map(input => input.value);
 
             const data = {
-              path: this.filters,
-              query: datos,
-              limit: 2,
+              paths: this.filters,
+              queries: datos,
+              limit: 10,
               query_type: "phrase"
             };
 
@@ -145,7 +133,9 @@
             .then(response => {
                 this.posts = response.data;
                 console.log(response.data);
-                alert(this.songs);
+                console.log("-----------------");
+                console.log("lista posts:");
+                console.log(this.posts);
               })
               .catch(error => {
                 // Manejar el error aquí
@@ -167,7 +157,7 @@
             const data = {
               path: this.filters,
               query: datos,
-              limit: 2,
+              limit: 10,
               query_type: "phrase"
             };
 
@@ -179,8 +169,12 @@
             axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
             .then(response => {
                 this.posts = response.data;
-                this.songs.push({songName: "TestName", songDuration:"04:02", songAuthor:"TestAuthor"});
+                //this.songs.push({songName: "TestName", songDuration:"04:02", songAuthor:"TestAuthor"});
                 console.log(response.data);
+                console.log("-----------------");
+                console.log("lista posts:");
+                console.log(this.posts);
+
               })
               .catch(error => {
                 // Manejar el error aquí
