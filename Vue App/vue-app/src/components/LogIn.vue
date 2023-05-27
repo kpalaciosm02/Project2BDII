@@ -218,7 +218,7 @@
         try { 
           const {userCredential}  = await signInWithEmailAndPassword(auth, this.email, this.password) 
           this.mensaje1= this.currentUser.uid;
-          alert("User id del usuario insertado: " + this.currentUser.uid);
+          //alert("User id del usuario insertado: " + this.currentUser.uid);
           this.$router.push({name:'home'});//cambiar por mainpage
         }catch(error) {
           console.log(error.message);
