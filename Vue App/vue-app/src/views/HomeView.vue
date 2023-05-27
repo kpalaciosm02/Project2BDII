@@ -73,7 +73,8 @@
           alert("El filtro a eliminar no existe.");
         }
       },
-      toggleShowSong(){
+      toggleShowSong(song){
+        this.songData = song;
         this.showSong = !this.showSong;
       },
 //----------------------------------------------------------------
@@ -199,7 +200,7 @@
   <div class="bigContainer" v-if="!showSong">
     <div class="songsContainer">
       <div v-for="song in songs" class="songContainer">
-        <SongPreview :songName="song.songName" :songAuthor="song.songAuthor" :songDuration="song.songDuration" @click="toggleShowSong()"></SongPreview>
+        <SongPreview :songName="song.songName" :songAuthor="song.songAuthor" :songDuration="song.songDuration" @click="toggleShowSong(song)"></SongPreview>
       </div>  
     </div>
     
@@ -228,6 +229,7 @@
     </div>
   </div>
   <div class="songContainer" v-if="showSong">
+    <button class="searchButton2" @click="toggleShowSong(true)">X</button>
     <SongInfo :songName="songData.songName" :songDuration="songData.songDuration" :songAuthor="songData.songAuthor" :songLyrics="songData.songLyrics" :songGenre="songData.songGenre"></SongInfo>
   </div>
 </template>
@@ -344,5 +346,20 @@
     border-radius: 4px;
     margin-top: 16px;
     margin-left: 150px;
+    cursor: pointer;
+  }
+  .searchButton2{
+    width: 20px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #bbe1fa;
+    background-color: #181818;
+    border: 1px solid #bbe1fa;
+    border-radius: 4px;
+    margin-top: 16px;
+    margin-left: 150px;
+    cursor: pointer;
   }
 </style>
