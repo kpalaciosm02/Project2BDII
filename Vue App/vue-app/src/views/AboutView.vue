@@ -1,21 +1,24 @@
 <script lang="ts">
-  export default{
-    name: 'AboutView'
-  }
+
 </script>
 
 <template>
   <div class="about">
-    <h1>This is a vue app for music visualization running on a docker container</h1>
+    <p>This is a Vue Application to search lyrics stored in a no SQL Database</p>
   </div>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100%;
-    display: flex;
-    align-items: center;
+  .about{
+    width: 100%;
+    height: 100%;
+    text-align: left;
   }
-}
+  .about p{
+    font-family: 'Overpass';
+    font-size: 32px;
+    line-height: 100%;
+    margin-top: 24px;
+    color: #bbe1fa;
+  }
 </style>
