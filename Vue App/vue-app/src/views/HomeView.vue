@@ -82,8 +82,9 @@
 
       ConstruirListaCancionesConFiltro(){
 
-        this.obtenerSinFiltro()
-        .then(() => {
+        this.obtenerSinFiltro();
+        alert(this.songs);
+        /*.then(() => {
           this.songs = this.posts.map((item) => {
             return {
               songName: item.SName,
@@ -95,8 +96,7 @@
         .catch((error) => {
           // Manejar el error aquí
           console.error(error);
-        });
-        
+        });*/
       },
 //----------------------------------------------------------------
 //----------------------------------------------------------------
@@ -104,9 +104,9 @@
 
       ConstruirListaCancionesSinFiltro(){
 
-          this.obtenerSinFiltro()
-          .then(() => {
-            this.songs = this.posts.map((item) => {
+        this.obtenerSinFiltro();
+        /*.then(() => {
+          this.songs = this.posts.map((item) => {
             return {
               songName: item.SName,
               songDuration: "3:46", // Obtener la duración de la canción desde el campo Lyric
@@ -117,14 +117,14 @@
         .catch((error) => {
             // Manejar el error aquí
             console.error(error);
-        });
-        },
+        });*/
+      },
 
 
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 //----------------------------------------------------------------
-       obtenerConFiltro() {
+      obtenerConFiltro() {
         try {
             const inputs = document.querySelectorAll('.filterContainer .filterInput');
             const datos = Array.from(inputs).map(input => input.value);
@@ -145,6 +145,7 @@
             .then(response => {
                 this.posts = response.data;
                 console.log(response.data);
+                alert(this.songs);
               })
               .catch(error => {
                 // Manejar el error aquí
@@ -155,7 +156,7 @@
         } catch (error) {
             console.error(error);
         }
-        },
+      },
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 //----------------------------------------------------------------
@@ -163,7 +164,6 @@
         try {
             const inputs = document.querySelectorAll('.filterContainer .filterInput');
             const datos = Array.from(inputs).map(input => input.value);
-
             const data = {
               path: this.filters,
               query: datos,
@@ -179,6 +179,7 @@
             axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
             .then(response => {
                 this.posts = response.data;
+                this.songs.push({songName: "TestName", songDuration:"04:02", songAuthor:"TestAuthor"});
                 console.log(response.data);
               })
               .catch(error => {

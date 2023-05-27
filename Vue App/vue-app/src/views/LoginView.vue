@@ -24,7 +24,7 @@
   text-align: center;
   /*color: #2c3e50;*/
   background-color: #181818;
-  margin-top: 60px;
+  margin-top: 0px;
 }
 body{
     background: #181818;
