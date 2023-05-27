@@ -190,6 +190,11 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 
 
+  const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+
   const firebaseConfig = {
     apiKey: "AIzaSyDL7BvGvYy_zFiae-U1MKlvc9fbSXdnn8E",
     authDomain: "proyectobd2-1ee28.firebaseapp.com",
@@ -212,6 +217,8 @@ import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
         currentUser: null,
         email: '',
         password: '',
+        isValidEmail: true,
+        isValidPassword: true,
       };
     },
     mounted() {
@@ -232,7 +239,14 @@ import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
       async signUp() {
 
         try { 
-            
+
+            this.isValidEmail = emailRegex.test(this.email);
+            this.isValidPassword = passwordRegex.test(this.password);
+
+            if (!this.isValidEmail || !this.isValidPassword) {
+              alert("Datos invalidos para registro");
+              return;
+            }
             const {userCredential}  = await createUserWithEmailAndPassword(auth, this.email, this.password)
             alert("Usuario Registrado");
             const user = userCredential.user;
