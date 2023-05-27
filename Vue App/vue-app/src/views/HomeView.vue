@@ -87,7 +87,9 @@
             return {
               songName: item.SName,
               songDuration: "3:46", // Obtener la duración de la canción desde el campo Lyric
-              songAuthor: item.Artist
+              songAuthor: item.Artist,
+              songLyrics: item.Lyric,
+              songGenre: item.Genre
             };
           });
         
@@ -103,7 +105,10 @@
             return {
               songName: item.SName,
               songDuration: "3:46", // Obtener la duración de la canción desde el campo Lyric
-              songAuthor: item.Artist
+              songAuthor: item.Artist,
+              songLyrics: item.Lyric,
+              songGenre: item.Genre
+
             };
           });
       },
