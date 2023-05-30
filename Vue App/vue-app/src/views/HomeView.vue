@@ -27,9 +27,6 @@
 
         ],
 
-        datos: [
-
-        ],
 
         songData: {
           songName: 'Somebody that I used to know',
@@ -64,7 +61,7 @@
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 //----------------------------------------------------------------
-/*      
+     
       deleteFilter(filter){
         const index = this.filters.indexOf(filter);
         if (index != -1){
@@ -78,22 +75,9 @@
         this.songData = song;
         this.showSong = !this.showSong;
       },
-      */
+      
 
-      deleteFilter(filter) {
-        const index = this.filters.indexOf(filter);
-        if (index != -1) {
-          this.filters.splice(index, 1);
-
-          // Elimina el valor asociado al filtro en `datos`
-          this.datos.splice(index, 1);
-          if (datosIndex != -1) {
-            this.datos.splice(datosIndex, 1);
-          }
-        } else {
-          alert("El filtro a eliminar no existe.");
-        }
-      },
+      
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 //----------------------------------------------------------------
@@ -137,14 +121,14 @@
 //----------------------------------------------------------------
       obtenerConFiltro() {
         try {
-          /*
+          
             const inputs = document.querySelectorAll('.filterContainer .filterInput');
             const datos = Array.from(inputs).map(input => input.value);
-          */
+          
             const data = {
               paths: this.filters,
-              queries: this.datos,
-              limit: 10,
+              queries: datos,
+              limit: 25,
               query_type: "phrase"
             };
 
@@ -176,14 +160,11 @@
 //----------------------------------------------------------------
        obtenerSinFiltro() {
         try {
-          /*
-            const inputs = document.querySelectorAll('.filterContainer .filterInput');
-            const datos = Array.from(inputs).map(input => input.value);
-            */
+          
             const data = {
               path: this.filters,
-              queries: this.datos,
-              limit: 10,
+              queries: datos,
+              limit: 25,
               query_type: "phrase"
             };
 
