@@ -68,6 +68,7 @@
         const index = this.filters.indexOf(filter);
         if (index != -1){
           this.filters.splice(index, 1);
+          document.getElementById("filterInput").value = "";
         }
         else{
           alert("El filtro a eliminar no existe.");
@@ -219,7 +220,7 @@
       <div v-for="filter in filters" class="filter">
         <div class="filterContainer">
           {{ filter }}
-          <input type="text" placeholder="Inserte el dato a buscar con el filtro" class="filterInput">
+          <input type="text" placeholder="Inserte el dato a buscar con el filtro" class="filterInput" id="filterInput">
         </div>
         <div class="deleteButton" @click="deleteFilter(filter)">-</div>
       </div>
