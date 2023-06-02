@@ -186,14 +186,15 @@ body {
 
 
 
+// Importa modulos necesarios para funcionalidad de firebase
+
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 
+  //Genera una expresion regular 
+  const emailRegex =  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const emailRegex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
+  const passwordRegex = /^.{8,}$/;
 
   const firebaseConfig = {
     apiKey: "AIzaSyDL7BvGvYy_zFiae-U1MKlvc9fbSXdnn8E",
@@ -248,16 +249,17 @@ import { getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
               return;
             }
             const {userCredential}  = await createUserWithEmailAndPassword(auth, this.email, this.password)
+            
             alert("Usuario Registrado");
             const user = userCredential.user;
             console.log('User created:', user);
             console.log("Usuario creado: " + user.email);
-
-             
             } 
-            catch(error) {
-                   console.log(error.message)
-                }
+
+        catch(error) {
+              alert("No se pudo registrar usuario");
+              console.log(error.message)
+          }
       }
   }
 }

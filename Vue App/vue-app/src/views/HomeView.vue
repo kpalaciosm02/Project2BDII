@@ -11,17 +11,12 @@
         SongPreview,
         SongInfo
       },
+
     data(){
 
 
       return {
-        SongNameA:null,
-        SongDurationA:null,
-        songAuthorA:null,  
-        SongGenreA:null,
-        SongLyricsA:null,
-
-
+      
         posts: [],
 
         songs : [
@@ -31,6 +26,7 @@
         filters: [
 
         ],
+
 
         songData: {
           songName: 'Somebody that I used to know',
@@ -55,6 +51,7 @@
         const selectedFilter = document.getElementById('filterName').value;
         if (!this.filters.includes(selectedFilter)){
           this.filters.push(selectedFilter);
+          this.datos[selectedFilter] = filterInputValue;
         }
         else{
           alert("Este filtro ya se encuentra en el sistema.")
@@ -63,7 +60,8 @@
 
 //----------------------------------------------------------------
 //----------------------------------------------------------------
-//----------------------------------------------------------------      
+//----------------------------------------------------------------
+     
       deleteFilter(filter){
         const index = this.filters.indexOf(filter);
         if (index != -1){
@@ -78,6 +76,9 @@
         this.songData = song;
         this.showSong = !this.showSong;
       },
+      
+
+      
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 //----------------------------------------------------------------
@@ -121,13 +122,14 @@
 //----------------------------------------------------------------
       obtenerConFiltro() {
         try {
+          
             const inputs = document.querySelectorAll('.filterContainer .filterInput');
             const datos = Array.from(inputs).map(input => input.value);
-
+          
             const data = {
               paths: this.filters,
               queries: datos,
-              limit: 10,
+              limit: 25,
               query_type: "phrase"
             };
 
@@ -136,7 +138,7 @@
               'Access-Control-Allow-Origin': '*'
             };
 
-            axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search/filters', data, { headers })
+            axios.post('https://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search/filters', data, { headers })
             .then(response => {
                 this.posts = response.data;
                 console.log(response.data);
@@ -159,12 +161,11 @@
 //----------------------------------------------------------------
        obtenerSinFiltro() {
         try {
-            const inputs = document.querySelectorAll('.filterContainer .filterInput');
-            const datos = Array.from(inputs).map(input => input.value);
+          
             const data = {
               path: this.filters,
-              query: datos,
-              limit: 10,
+              queries: datos,
+              limit: 25,
               query_type: "phrase"
             };
 
@@ -173,7 +174,7 @@
               'Access-Control-Allow-Origin': '*'
             };
 
-            axios.post('http://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
+            axios.post('https://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
             .then(response => {
                 this.posts = response.data;
                 //this.songs.push({songName: "TestName", songDuration:"04:02", songAuthor:"TestAuthor"});
@@ -215,6 +216,7 @@
         <option value="language">Lenguaje</option>
         <option value="Popularity">Popularidad</option>
         <option value="Lyric">Letra</option>
+        <option value="Songs">Numero de canciones</option>
       </select>
       <button class="filterButton" @click="agregarFiltro">+ Agregar filtro</button>
       <div v-for="filter in filters" class="filter">
