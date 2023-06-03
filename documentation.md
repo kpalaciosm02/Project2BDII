@@ -143,3 +143,34 @@ El método `test_mongo_search_filters` realiza una búsqueda con filtros en la b
 Cada método de prueba utiliza el método `assertEqual` para verificar si los valores esperados coinciden con los valores reales obtenidos de la API.
 
 Al final del código, se utiliza `unittest.main()` para ejecutar todas las pruebas definidas en la clase `TestAPI`.
+
+
+## Conclusiones y Recomendaciones
+
+### Recomendaciones
+
+- Revisar y asegurarse de que todas las bibliotecas y dependencias necesarias estén instaladas correctamente antes de ejecutar el código.
+
+- Ejecutar el código de las pruebas unitarias para verificar que el API este en correcto funcionamiento.
+
+### Conclusiones
+
+- Desde el inicio del proyecto nos planteamos dividirnos las cargas de trabajo, de esta manera cada uno de los integrantes tendría una tarea que realizar y de esta manera podríamos realizar el trabajo de manera mucho mas sencilla y mas rápida.  
+
+- Docker al igual que en el desarrollo del proyecto pasado, fue igual una herramienta bastante importante para poder tener una imagen dentro de un contenedor en Azure y de esta manera correr nuestras aplicaciones en la nube.
+
+- Gracias a que ya habíamos trabajado previamente en el proyecto pasado con Azure como nuestro servicio en la nube, fue mucho mas fácil saber manipular este, y gracias al trabajo pasado no tuvimos contratiempos en cuanto al uso de este servicio.
+
+- El desarrollo del API fue una tarea bastante sencilla, ya que previamente utilizamos flask para el desarrollo de esta, esta librería de python la tenemos muy familiarizada. También, se implemento pymongo para interactuar con MongoDB, lo cual no es un modulo complejo de usar, gracias a toda la información que hay sobre este.
+
+- El uso de GitHub para el desarrollo del proyecto fue una parte importante para este, decidimos tener diferentes ramas, dependiendo del componente que se iba a trabajar, asi cada integrante podría trabajar en una rama correspondiente, cuando todos los componentes estaban listos, simplemente se hacia merge a nuestra rama principal.
+  
+- implementar los UnitTest fue sencillo, gracias a la librería de python que nos lo permite, simplemente se verificaba el funcionamiento de cada ruta de nuestra API obteniendo la respuesta que se esperaba para dicha ruta.
+
+- Desarrollar uin indice de búsqueda fue bastante sencillo y de hecho fue algo sumamente importante para el desarrollo del API, ya que a la hora de buscar la cancion, se utiliza el indice de búsqueda creado el cual con la información proporcionada, nos encontrara las canciones que coincidan.
+
+- El desarrollo de este proyecto fue mucho mas rápido y mas eficiente que el del proyecto pasado, esto gracias a que ya teníamos la experiencia pasada trabajando en grupo, asi como el conocimiento de herramientas previamente utilizadas. El trabajo en grupo de este proyecto fue colaborativo y coordinado, cada integrante contribuyo con su parte para realizar el mejor trabajo posible.
+
+- La documentación del proyecto fue elaborada de la mejor manera, se incluyeron instrucciones claras sobre cómo configurar el entorno de desarrollo, ejecutar la aplicación y realizar pruebas. 
+
+- La actitud de cada miembro del equipo fue positiva y colaborativa y esto fue de suma importancia para el éxito del proyecto. Todos estuvieron dispuestos a asumir responsabilidades y a ayudarse mutuamente.
