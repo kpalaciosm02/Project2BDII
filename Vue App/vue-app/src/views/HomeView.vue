@@ -138,11 +138,11 @@
               'Access-Control-Allow-Origin': '*'
             };
 
+            
             axios.post('https://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search/filters', data, { headers })
             .then(response => {
                 this.posts = response.data;
-                console.log(response.data);
-                console.log("-----------------");
+
                 console.log("lista posts:");
                 console.log(this.posts);
               })
@@ -177,15 +177,13 @@
             axios.post('https://main-app.gentleflower-12982389.eastus.azurecontainerapps.io/mongo/search', data, { headers })
             .then(response => {
                 this.posts = response.data;
-                //this.songs.push({songName: "TestName", songDuration:"04:02", songAuthor:"TestAuthor"});
-                console.log(response.data);
-                console.log("-----------------");
+                
                 console.log("lista posts:");
                 console.log(this.posts);
 
               })
               .catch(error => {
-                // Manejar el error aquí
+               
                 console.error(error);
               });
             
