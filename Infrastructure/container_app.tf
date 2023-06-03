@@ -42,13 +42,13 @@ template {
 #      liveness_probe {
 #        port      = 5000
 #        timeout   = 5
-#        transport = "HTTP"
+#        transport = "HTTPS"
 #      }
 
 #      readiness_probe {
 #        port      = 5000
 #        timeout   = 5
-#        transport = "HTTP"
+#        transport = "HTTPS"
 #      }
 
     }
